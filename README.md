@@ -1,0 +1,2 @@
+# plateforme-correction-SB
+platform
