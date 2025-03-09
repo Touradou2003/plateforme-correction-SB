@@ -84,6 +84,89 @@ La plateforme est construite selon une architecture microservices pour assurer l
 - **Database** : Base de données PostgreSQL pour stocker les données de l'application
 - **Storage** : Service de stockage cloud pour les fichiers PDF (AWS S3, MinIO, etc.)
 
+## 🏗️ Structure 
+
+/plateforme-evaluation-bdd/
+├── .github/                      # Configuration CI/CD pour GitHub Actions
+│   └── workflows/
+│       └── deploy.yml
+├── docker/                       # Fichiers de configuration Docker
+│   ├── Dockerfile.backend
+│   ├── Dockerfile.frontend
+│   ├── Dockerfile.ia
+│   └── docker-compose.yml
+│
+├── backend/                      # API backend (Django/Node.js)
+│   ├── app/
+│   │   ├── controllers/          # Contrôleurs
+│   │   ├── models/               # Modèles de données
+│   │   ├── services/             # Services métier
+│   │   ├── middlewares/          # Middlewares
+│   │   └── utils/                # Fonctions utilitaires
+│   ├── config/                   # Configuration du backend
+│   ├── routes/                   # Routes API
+│   ├── tests/                    # Tests unitaires et d'intégration
+│   ├── package.json              # (Pour Node.js)
+│   └── requirements.txt          # (Pour Django)
+│
+├── frontend/                     # Application frontend (React/Vue.js)
+│   ├── public/                   # Fichiers statiques
+│   ├── src/
+│   │   ├── assets/               # Images, fonts, etc.
+│   │   ├── components/           # Composants réutilisables
+│   │   │   ├── common/           # Éléments d'interface communs
+│   │   │   ├── dashboard/        # Composants du tableau de bord
+│   │   │   ├── auth/             # Composants d'authentification
+│   │   │   ├── professor/        # Composants spécifiques aux professeurs
+│   │   │   └── student/          # Composants spécifiques aux étudiants
+│   │   ├── hooks/                # Hooks personnalisés
+│   │   ├── layouts/              # Layouts de page
+│   │   ├── pages/                # Pages de l'application
+│   │   ├── services/             # Services API
+│   │   ├── store/                # Store global (Redux/Vuex)
+│   │   ├── utils/                # Fonctions utilitaires
+│   │   ├── App.jsx               # Composant principal
+│   │   └── main.jsx              # Point d'entrée
+│   ├── .env.development          # Variables d'environnement dev
+│   ├── .env.production           # Variables d'environnement prod
+│   └── package.json              # Dépendances
+│
+├── ia-service/                   # Service d'intelligence artificielle
+│   ├── app/
+│   │   ├── models/               # Modèles IA pré-entraînés
+│   │   ├── services/             # Services d'IA
+│   │   │   ├── correction.py     # Service de correction
+│   │   │   ├── notation.py       # Service de notation
+│   │   │   └── feedback.py       # Service de feedback
+│   │   ├── utils/                # Fonctions utilitaires
+│   │   └── server.py             # API du service IA
+│   ├── tests/                    # Tests unitaires
+│   └── requirements.txt          # Dépendances Python
+│
+├── k8s/                          # Configuration Kubernetes
+│   ├── backend.yaml
+│   ├── frontend.yaml
+│   ├── ia-service.yaml
+│   └── database.yaml
+│
+├── scripts/                      # Scripts utilitaires
+│   ├── setup.sh
+│   ├── seed-db.js
+│   └── deployment.sh
+│
+├── documentation/                # Documentation du projet
+│   ├── api/                      # Documentation de l'API
+│   ├── architecture/             # Documentation de l'architecture
+│   ├── guides/                   # Guides d'utilisation
+│   │   ├── student.md
+│   │   └── professor.md
+│   └── manuel-utilisateur.pdf    # Manuel utilisateur complet
+│
+├── .gitignore                    # Fichiers à ignorer par Git
+├── .env.example                  # Exemple de variables d'environnement
+├── LICENSE                       # Licence du projet
+└── README.md                     # Documentation principale
+
 ## 🔧 Technologies
 
 ### Frontend
