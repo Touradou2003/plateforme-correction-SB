@@ -84,9 +84,7 @@ La plateforme est construite selon une architecture microservices pour assurer l
 - **Database** : Base de données PostgreSQL pour stocker les données de l'application
 - **Storage** : Service de stockage cloud pour les fichiers PDF (AWS S3, MinIO, etc.)
 
-## 🏗️ Structure 
-
-## 🏗️ Structure
+## 🏗️ Structure du Projet 
 
 ```
 /plateforme-evaluation-bdd/
