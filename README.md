@@ -86,6 +86,9 @@ La plateforme est construite selon une architecture microservices pour assurer l
 
 ## 🏗️ Structure 
 
+## 🏗️ Structure
+
+```
 /plateforme-evaluation-bdd/
 ├── .github/                      # Configuration CI/CD pour GitHub Actions
 │   └── workflows/
@@ -165,7 +168,8 @@ La plateforme est construite selon une architecture microservices pour assurer l
 ├── .gitignore                    # Fichiers à ignorer par Git
 ├── .env.example                  # Exemple de variables d'environnement
 ├── LICENSE                       # Licence du projet
-└── README.md                     # Documentation principale
+└── README.md
+```
 
 ## 🔧 Technologies
 
