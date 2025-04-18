@@ -1,0 +1,11 @@
+# Ignorer le dossier node_modules
+node_modules/
+
+docker/
+
+# Ignorer les fichiers log
+*.log
+
+# Ignorer d'autres fichiers ou dossiers temporaires
+dist/
+tmp/
