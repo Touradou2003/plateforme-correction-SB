@@ -2,6 +2,7 @@ require('dotenv').config();
 require('./config/db');
 
 const express = require('express');
+const mongoose = require('mongoose');
 const cors = require('cors');
 const helmet = require('helmet');
 
@@ -19,14 +20,22 @@ app.use(cors());
 app.use(express.json());
 
 // Montage des routes
-app.use('/api/auth',    authRoutes);
-app.use('/api/users',   userRoutes);
-app.use('/api/subjects',subjectRoutes);
-app.use('/api/submissions', submissionRoutes);
-app.use('/api/ai',      aiRoutes);
+app.use('/auth',    authRoutes);
+app.use('/users',   userRoutes);
+app.use('/subjects',subjectRoutes);
+app.use('/submissions', submissionRoutes);
+app.use('/ai',      aiRoutes);
 
 // Serveur de fichiers uploadés
 app.use('/uploads', express.static('uploads'));
+
+// Connexion à MongoDB
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+  .then(() => console.log('Connected to MongoDB'))
+  .catch(err => console.error('MongoDB connection error:', err));
 
 // 404 pour les routes inconnues
 app.use((req, res, next) => {
@@ -35,8 +44,8 @@ app.use((req, res, next) => {
 
 // Gestion centralisée des erreurs
 app.use((err, req, res, next) => {
-  console.error(err);
-  res.status(err.status || 500).json({ message: err.message || 'Erreur serveur.' });
+  console.error(err.stack);
+  res.status(500).json({ message: 'Something broke!' });
 });
 
 const PORT = process.env.PORT || 3000;

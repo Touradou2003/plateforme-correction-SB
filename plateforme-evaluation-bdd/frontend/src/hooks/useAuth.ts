@@ -1,35 +1,66 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../store';
-import { setCredentials, logout } from '../store/slices/authSlice';
-import { authService } from '../services/authService';
+import { useState, useCallback, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useApi } from './useApi';
+import { User } from '../types';
+
+interface AuthState {
+  user: User | null;
+  isAuthenticated: boolean;
+}
 
 export const useAuth = () => {
-  const dispatch = useDispatch();
-  const auth = useSelector((state: RootState) => state.auth);
+  const navigate = useNavigate();
+  const { post, get } = useApi<User>();
+  const [state, setState] = useState<AuthState>({
+    user: null,
+    isAuthenticated: false,
+  });
 
-  const login = async (email: string, password: string) => {
-    try {
-      const data = await authService.login(email, password);
-      dispatch(setCredentials(data));
-    } catch (error) {
-      throw error;
-    }
-  };
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const user = await get('/auth/me');
+        setState({ user, isAuthenticated: true });
+      } catch {
+        setState({ user: null, isAuthenticated: false });
+      }
+    };
 
-  const signOut = async () => {
+    checkAuth();
+  }, [get]);
+
+  const login = useCallback(
+    async (email: string, password: string) => {
+      const user = await post('/auth/login', { email, password });
+      setState({ user, isAuthenticated: true });
+      navigate('/dashboard');
+    },
+    [post, navigate]
+  );
+
+  const logout = useCallback(async () => {
     try {
-      await authService.logout();
-      dispatch(logout());
-    } catch (error) {
-      console.error('Logout error:', error);
-      dispatch(logout());
+      await post('/auth/logout', {});
+    } finally {
+      setState({ user: null, isAuthenticated: false });
+      navigate('/login');
     }
-  };
+  }, [post, navigate]);
+
+  const register = useCallback(
+    async (email: string, password: string, name: string) => {
+      const user = await post('/auth/register', { email, password, name });
+      setState({ user, isAuthenticated: true });
+      navigate('/dashboard');
+    },
+    [post, navigate]
+  );
 
   return {
-    user: auth.user,
-    isAuthenticated: auth.isAuthenticated,
+    user: state.user,
+    isAuthenticated: state.isAuthenticated,
     login,
-    signOut,
+    logout,
+    register,
   };
 };
