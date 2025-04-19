@@ -20,11 +20,11 @@ app.use(cors());
 app.use(express.json());
 
 // Montage des routes
-app.use('/auth',    authRoutes);
-app.use('/users',   userRoutes);
-app.use('/subjects',subjectRoutes);
-app.use('/submissions', submissionRoutes);
-app.use('/ai',      aiRoutes);
+app.use('/api/auth',        authRoutes);
+app.use('/api/users',       userRoutes);
+app.use('/api/subjects',    subjectRoutes);
+app.use('/api/submissions', submissionRoutes);
+app.use('/api/ai',          aiRoutes);
 
 // Serveur de fichiers uploadés
 app.use('/uploads', express.static('uploads'));
