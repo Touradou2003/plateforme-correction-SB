@@ -1,5 +1,4 @@
 import '@testing-library/jest-dom';
-import 'jest-environment-jsdom';
 import { configure } from '@testing-library/react';
 
 // Mock Chart.js

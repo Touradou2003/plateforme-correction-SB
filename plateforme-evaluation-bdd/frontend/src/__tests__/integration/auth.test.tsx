@@ -83,4 +83,4 @@ describe('Auth Integration', () => {
       expect(screen.getByText(/invalid credentials/i)).toBeInTheDocument();
     });
   });
-}); 
+});
