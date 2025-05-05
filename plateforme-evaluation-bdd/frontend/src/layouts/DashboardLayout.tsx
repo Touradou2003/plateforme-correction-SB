@@ -4,7 +4,7 @@ import { useAuth } from '../hooks/useAuth';
 import { Menu, LogOut, Database, Users, BarChart3 } from 'lucide-react';
 
 const DashboardLayout: React.FC = () => {
-  const { isAuthenticated, user, signOut } = useAuth();
+  const { isAuthenticated, user, logout } = useAuth();
   const [isSidebarOpen, setIsSidebarOpen] = React.useState(true);
 
   if (!isAuthenticated) {
@@ -43,7 +43,7 @@ const DashboardLayout: React.FC = () => {
             <Database size={20} />
             <span>Exercices</span>
           </a>
-          {user?.role === 'professor' && (
+          {user?.role === 'teacher' && (
             <a
               href="/students"
               className="flex items-center gap-3 px-4 py-3 text-gray-700 rounded-lg hover:bg-primary-50 hover:text-primary-600"
@@ -68,7 +68,7 @@ const DashboardLayout: React.FC = () => {
           <div className="flex items-center gap-4">
             <span className="text-sm text-gray-600">{user?.email}</span>
             <button
-              onClick={signOut}
+              onClick={logout}
               className="flex items-center gap-2 text-gray-600 hover:text-gray-800"
             >
               <LogOut size={20} />

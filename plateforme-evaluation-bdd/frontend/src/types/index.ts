@@ -9,9 +9,11 @@ export interface Subject {
   id: string;
   title: string;
   description: string;
-  deadline: string;
-  createdAt: string;
-  createdBy: string;
+  submissionsCount: number;
+  averageScore: number;
+  deadline?: string;    // optional
+  createdAt?: string;   // optional
+  createdBy?: string;   // optional
 }
 
 export interface Submission {

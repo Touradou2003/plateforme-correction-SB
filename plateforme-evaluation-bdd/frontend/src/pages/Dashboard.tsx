@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { subjectService, submissionService } from '../services/api';
+import { apiService } from '../services/api';
 import { Subject, Submission } from '../types';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, Title } from 'chart.js';
 import { Pie, Bar } from 'react-chartjs-2';
@@ -25,16 +25,16 @@ const Dashboard: React.FC = () => {
     const fetchData = async () => {
       try {
         const [subjectsRes, submissionsRes] = await Promise.all([
-          subjectService.getAll(),
-          submissionService.getByUser(),
+          apiService.getSubjects(),
+          apiService.getSubmissions(),
         ]);
-        setSubjects(subjectsRes.data);
-        setSubmissions(submissionsRes.data);
+        setSubjects(subjectsRes);
+        setSubmissions(submissionsRes);
       } catch (error) {
-        addNotification({
-          type: 'error',
-          message: 'Erreur lors du chargement des données',
-        });
+        addNotification(
+          'error',
+          'Erreur lors du chargement des données',
+        );
       } finally {
         setLoading(false);
       }

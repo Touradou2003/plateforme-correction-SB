@@ -6,11 +6,15 @@ import { useNotification } from '../../hooks/useNotification';
 import { apiService } from '../../services/api';
 import FormInput from '../../components/common/FormInput';
 
-interface Subject {
+export interface Subject {
   id: string;
   title: string;
   description: string;
-  deadline: string;
+  submissionsCount: number;
+  averageScore: number;
+  deadline?: string;    // optional
+  createdAt?: string;   // optional
+  createdBy?: string;   // optional
 }
 
 export const Subjects: React.FC = () => {
@@ -34,12 +38,12 @@ export const Subjects: React.FC = () => {
   const fetchSubjects = async () => {
     try {
       const response = await apiService.getSubjects();
-      setSubjects(response.data);
+      setSubjects(response);
     } catch (error) {
-      addNotification({
-        type: 'error',
-        message: 'Erreur lors du chargement des sujets',
-      });
+      addNotification(
+        'error',
+        'Erreur lors du chargement des sujets',
+      );
     } finally {
       setIsLoading(false);
     }
@@ -59,17 +63,17 @@ export const Subjects: React.FC = () => {
     e.preventDefault();
     try {
       await apiService.createSubject(newSubject);
-      addNotification({
-        type: 'success',
-        message: 'Sujet créé avec succès',
-      });
+      addNotification(
+        'success',
+        'Sujet créé avec succès',
+      );
       setNewSubject({ title: '', description: '', deadline: '' });
       fetchSubjects();
     } catch (error) {
-      addNotification({
-        type: 'error',
-        message: 'Erreur lors de la création du sujet',
-      });
+      addNotification(
+        'error',
+        'Erreur lors de la création du sujet',
+      );
     }
   };
 
@@ -129,7 +133,7 @@ export const Subjects: React.FC = () => {
                   </td>
                   <td className="px-4 sm:px-6 py-4 whitespace-nowrap">
                     <div className="text-sm text-gray-900">
-                      {new Date(subject.deadline).toLocaleDateString()}
+                      {new Date((subject.deadline != undefined) ? subject.deadline : "").toLocaleDateString()}
                     </div>
                   </td>
                   <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-sm font-medium">
