@@ -1,6 +1,4 @@
 require('dotenv').config();
-require('./config/db');
-
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -30,12 +28,33 @@ app.use('/api/ai',          aiRoutes);
 app.use('/uploads', express.static('uploads'));
 
 // Connexion à MongoDB
-mongoose.connect(process.env.MONGODB_URI, {
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://touks:touks123@cluster0.mongodb.net/plateforme-eval?retryWrites=true&w=majority';
+console.log('Attempting to connect to MongoDB...');
+mongoose.connect(MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
-  .then(() => console.log('Connected to MongoDB'))
-  .catch(err => console.error('MongoDB connection error:', err));
+  .then(() => {
+    console.log('Connected to MongoDB successfully');
+    console.log('MongoDB URI:', MONGODB_URI);
+  })
+  .catch(err => {
+    console.error('MongoDB connection error:', err);
+    process.exit(1); // Exit if we can't connect to the database
+  });
+
+// Log MongoDB connection events
+mongoose.connection.on('error', err => {
+  console.error('MongoDB connection error:', err);
+});
+
+mongoose.connection.on('disconnected', () => {
+  console.log('MongoDB disconnected');
+});
+
+mongoose.connection.on('reconnected', () => {
+  console.log('MongoDB reconnected');
+});
 
 // 404 pour les routes inconnues
 app.use((req, res, next) => {

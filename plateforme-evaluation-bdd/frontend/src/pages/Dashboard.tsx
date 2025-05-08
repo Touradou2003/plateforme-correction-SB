@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { apiService } from '../services/api';
 import { Subject, Submission } from '../types';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, Title } from 'chart.js';
@@ -120,7 +120,7 @@ const Dashboard: React.FC = () => {
                 <h3 className="font-medium">{subject.title}</h3>
                 <p className="text-sm text-gray-600">{subject.description}</p>
                 <p className="text-xs text-gray-500 mt-2">
-                  Date limite: {new Date(subject.deadline).toLocaleDateString()}
+                  Date limite: {subject.deadline ? new Date(subject.deadline).toLocaleDateString() : 'Non définie'}
                 </p>
               </div>
             )}

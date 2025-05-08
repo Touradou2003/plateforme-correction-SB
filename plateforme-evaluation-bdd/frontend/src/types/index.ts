@@ -19,14 +19,14 @@ export interface Subject {
 export interface Submission {
   id: string;
   subjectId: string;
-  userId: string;
+  userId?: string;
   content: string;
   files?: string[];
   status: 'pending' | 'submitted' | 'corrected';
   note?: number;
   feedback?: string;
   createdAt: string;
-  updatedAt: string;
+  updatedAt?: string;
 }
 
 export interface AuthState {

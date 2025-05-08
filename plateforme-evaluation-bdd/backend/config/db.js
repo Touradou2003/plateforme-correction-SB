@@ -14,3 +14,6 @@ mongoose.connect(MONGODB_URI, {
     console.error('MongoDB connection error:', err);
     process.exit(1);
   });
+
+// Export mongoose for use in other files
+module.exports = mongoose;
